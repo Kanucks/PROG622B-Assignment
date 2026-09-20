@@ -1,0 +1,4 @@
+# NeoVerse City Engine configuration
+city_name=NeoVerse City
+max_queue_size=100
+simulation_speed=1
