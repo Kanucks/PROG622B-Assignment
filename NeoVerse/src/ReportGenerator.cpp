@@ -3,17 +3,19 @@
 #include <iostream>
 #include <map>
 
+using namespace std;
+
 namespace ReportGenerator {
 
 void printEventReport(const std::vector<Event>& events) {
-    std::cout << "\n=== EVENT REPORT ===\n";
-    std::cout << "Total events processed: " << events.size() << "\n";
-    if (events.empty()) { std::cout << "(no events yet)\n"; return; }
+    cout << "\n=== EVENT REPORT ===\n";
+    cout << "Total events processed: " << events.size() << "\n";
+    if (events.empty()) { cout << "(no events yet)\n"; return; }
 
     // std::count_if - O(n): one linear scan, tallying matches.
     int critical = static_cast<int>(std::count_if(events.begin(), events.end(),
         [](const Event& e) { return e.getSeverity() >= 4; }));
-    std::cout << "Critical alerts (severity >= 4): " << critical << "\n";
+    cout << "Critical alerts (severity >= 4): " << critical << "\n";
 
     // std::max_element / std::min_element - O(n) each: a single linear
     // scan tracking the best candidate seen so far.
@@ -21,8 +23,8 @@ void printEventReport(const std::vector<Event>& events) {
         [](const Event& a, const Event& b) { return a.getSeverity() < b.getSeverity(); });
     auto mildest = std::min_element(events.begin(), events.end(),
         [](const Event& a, const Event& b) { return a.getSeverity() < b.getSeverity(); });
-    std::cout << "Most severe event: " << worst->toString() << "\n";
-    std::cout << "Mildest event: " << mildest->toString() << "\n";
+    cout << "Most severe event: " << worst->toString() << "\n";
+    cout << "Mildest event: " << mildest->toString() << "\n";
 
     // Most common event type - O(n) to tally into a map, then O(k) to
     // scan the (at most 4) buckets for the largest one.
@@ -33,13 +35,13 @@ void printEventReport(const std::vector<Event>& events) {
     for (const auto& entry : tally) {
         if (entry.second > best) { best = entry.second; mostCommon = entry.first; }
     }
-    std::cout << "Most common event type: " << mostCommon << " (" << best << " occurrence(s))\n";
+    cout << "Most common event type: " << mostCommon << " (" << best << " occurrence(s))\n";
 
     // Average severity, used as a stand-in "response urgency" workload
     // metric - a single O(n) linear accumulation.
     double total = 0;
     for (const auto& e : events) total += e.getSeverity();
-    std::cout << "Average severity (proxy for response urgency): "
+    cout << "Average severity (proxy for response urgency): "
               << (total / static_cast<double>(events.size())) << "\n";
 
     // std::find_if - O(n): stops as soon as a match is located.
@@ -47,21 +49,21 @@ void printEventReport(const std::vector<Event>& events) {
     auto found = std::find_if(events.begin(), events.end(),
         [searchId](const Event& e) { return e.getEventID() == searchId; });
     if (found != events.end()) {
-        std::cout << "Lookup demo - found event #" << searchId << ": " << found->toString() << "\n";
+        cout << "Lookup demo - found event #" << searchId << ": " << found->toString() << "\n";
     }
 }
 
 void printSensorReport(std::vector<SensorReading>& readings) {
-    std::cout << "\n=== SENSOR REPORT ===\n";
-    if (readings.empty()) { std::cout << "(no sensor readings yet)\n"; return; }
+    cout << "\n=== SENSOR REPORT ===\n";
+    if (readings.empty()) { cout << "(no sensor readings yet)\n"; return; }
 
     // std::sort - O(n log n), introsort (a quicksort/heapsort/insertion
     // sort hybrid) - the standard choice whenever a full ordering is needed.
     std::sort(readings.begin(), readings.end(),
         [](const SensorReading& a, const SensorReading& b) { return a.value < b.value; });
-    std::cout << "Readings sorted by value (ascending):\n";
+    cout << "Readings sorted by value (ascending):\n";
     for (const auto& r : readings) {
-        std::cout << "  " << r.type << ": " << r.value << "\n";
+        cout << "  " << r.type << ": " << r.value << "\n";
     }
 
     // std::min_element / std::max_element - O(n) single linear scans.
@@ -69,8 +71,8 @@ void printSensorReport(std::vector<SensorReading>& readings) {
         [](const SensorReading& a, const SensorReading& b) { return a.value < b.value; });
     auto hi = std::max_element(readings.begin(), readings.end(),
         [](const SensorReading& a, const SensorReading& b) { return a.value < b.value; });
-    std::cout << "Lowest reading: " << lo->type << " = " << lo->value << "\n";
-    std::cout << "Highest reading: " << hi->type << " = " << hi->value << "\n";
+    cout << "Lowest reading: " << lo->type << " = " << lo->value << "\n";
+    cout << "Highest reading: " << hi->type << " = " << hi->value << "\n";
 }
 
 }

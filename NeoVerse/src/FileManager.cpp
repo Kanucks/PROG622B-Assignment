@@ -2,6 +2,8 @@
 #include <fstream>
 #include <iostream>
 
+using namespace std;
+
 namespace FileManager {
 
 std::map<std::string, std::string> loadConfig(const std::string& path) {
@@ -28,7 +30,7 @@ void exportEventsToCSV(const std::vector<Event>& events, const std::string& path
         out << e.getEventID() << "," << eventTypeToString(e.getType()) << ","
             << e.getDescription() << "," << e.getSeverity() << "," << e.getTimestamp() << "\n";
     }
-    std::cout << "Exported " << events.size() << " events to " << path << "\n";
+    cout << "Exported " << events.size() << " events to " << path << "\n";
 }
 
 }

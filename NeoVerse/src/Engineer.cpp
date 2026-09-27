@@ -4,6 +4,8 @@
 #include <iostream>
 #include <vector>
 
+using namespace std;
+
 Engineer::Engineer()
     : engineerID(""), username(""), encryptedPassword(""), clearanceLevel("Low") {}
 
@@ -48,5 +50,5 @@ Engineer Engineer::deserialize(const std::string& line) {
 }
 
 void Engineer::display() const {
-    std::cout << engineerID << "  " << username << "  [" << clearanceLevel << "]\n";
+    cout << engineerID << "  " << username << "  [" << clearanceLevel << "]\n";
 }

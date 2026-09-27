@@ -2,6 +2,8 @@
 #include <algorithm>
 #include <iostream>
 
+using namespace std;
+
 PowerSystem::PowerSystem(int id, const std::string& n, double startLevel)
     : CityComponent(id, n), powerLevel(startLevel) {}
 
@@ -16,10 +18,10 @@ double PowerSystem::getPowerLevel() const { return powerLevel; }
 void PowerSystem::processEvent(const Event& e) {
     if (e.getType() == EventType::PowerFailure) {
         powerLevel = std::max(0.0, powerLevel - (e.getSeverity() * 10.0));
-        std::cout << "  -> PowerSystem: grid strain detected, power level now "
-                  << powerLevel << "%\n";
+        cout << "  -> PowerSystem: grid strain detected, power level now "
+             << powerLevel << "%\n";
     } else {
-        std::cout << "  -> PowerSystem: no direct action required for this event\n";
+        cout << "  -> PowerSystem: no direct action required for this event\n";
     }
 }
 

@@ -1,13 +1,15 @@
 #include "CityComponent.h"
 #include <iostream>
 
+using namespace std;
+
 CityComponent::CityComponent(int id, const std::string& n)
     : componentID(id), name(n), active(false) {
-    std::cout << "[CityComponent] Constructing " << name << " (ID " << componentID << ")\n";
+    cout << "[CityComponent] Constructing " << name << " (ID " << componentID << ")\n";
 }
 
 CityComponent::~CityComponent() {
-    std::cout << "[CityComponent] Destroying " << name << " (ID " << componentID << ")\n";
+    cout << "[CityComponent] Destroying " << name << " (ID " << componentID << ")\n";
 }
 
 void CityComponent::activate() { active = true; }

@@ -2,6 +2,8 @@
 #include <algorithm>
 #include <iostream>
 
+using namespace std;
+
 SecuritySystem::SecuritySystem(int id, const std::string& n, int startThreat)
     : CityComponent(id, n), threatLevel(startThreat) {}
 
@@ -17,10 +19,10 @@ int SecuritySystem::getThreatLevel() const { return threatLevel; }
 void SecuritySystem::processEvent(const Event& e) {
     if (e.getType() == EventType::NetworkOverload) {
         threatLevel = std::min(100, threatLevel + e.getSeverity() * 12);
-        std::cout << "  -> SecuritySystem: intrusion risk rising, threat level now "
-                  << threatLevel << "\n";
+        cout << "  -> SecuritySystem: intrusion risk rising, threat level now "
+             << threatLevel << "\n";
     } else {
-        std::cout << "  -> SecuritySystem: no direct action required for this event\n";
+        cout << "  -> SecuritySystem: no direct action required for this event\n";
     }
 }
 

@@ -5,6 +5,8 @@
 #include <fstream>
 #include <sstream>
 
+using namespace std;
+
 std::string SensorReading::serialize() const {
     std::ostringstream oss;
     oss << id << "|" << type << "|" << value << "|" << timestamp;
@@ -67,8 +69,8 @@ bool CityDataManager::removeSensorReadingById(int id) {
 
 void CityDataManager::displaySensorReadings() const {
     for (const auto& r : sensorReadings) {
-        std::cout << "  #" << r.id << " " << r.type << ": " << r.value
-                  << " @ " << r.timestamp << "\n";
+        cout << "  #" << r.id << " " << r.type << ": " << r.value
+             << " @ " << r.timestamp << "\n";
     }
 }
 
@@ -82,7 +84,7 @@ void CityDataManager::displayLogs() const {
     // O(n) traversal - a linked list has no random access, so every node
     // must be visited in order through its next pointer.
     cityLogs.forEach([](const CityLogEntry& l) {
-        std::cout << "  [Log #" << l.id << "] " << l.message << " @ " << l.timestamp << "\n";
+        cout << "  [Log #" << l.id << "] " << l.message << " @ " << l.timestamp << "\n";
     });
 }
 

@@ -17,6 +17,8 @@
 #include "ReportGenerator.h"
 #include "FileManager.h"
 
+using namespace std;
+
 namespace {
 
 const std::string ENGINEERS_FILE  = "data/engineers.dat";
@@ -33,35 +35,35 @@ const std::string EXPORT_CSV_FILE = "data/events_export.csv";
 int readInt(const std::string& prompt) {
     int value;
     while (true) {
-        std::cout << prompt;
-        if (std::cin >> value) {
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        cout << prompt;
+        if (cin >> value) {
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             return value;
         }
-        std::cout << "Please enter a valid whole number.\n";
-        std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        cout << "Please enter a valid whole number.\n";
+        cin.clear();
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
 }
 
 double readDouble(const std::string& prompt) {
     double value;
     while (true) {
-        std::cout << prompt;
-        if (std::cin >> value) {
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        cout << prompt;
+        if (cin >> value) {
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             return value;
         }
-        std::cout << "Please enter a valid number.\n";
-        std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        cout << "Please enter a valid number.\n";
+        cin.clear();
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
 }
 
 std::string readLine(const std::string& prompt) {
-    std::cout << prompt;
+    cout << prompt;
     std::string line;
-    std::getline(std::cin, line);
+    std::getline(cin, line);
     return line;
 }
 
@@ -140,22 +142,22 @@ void printMenu() {
 } // namespace
 
 int main() {
-    std::cout << "======================================================\n"
-                 "   NeoVerse: AI City Survival System (2035 Prototype)\n"
-                 "======================================================\n\n";
+    cout << "======================================================\n"
+            "   NeoVerse: AI City Survival System (2035 Prototype)\n"
+            "======================================================\n\n";
 
     auto config = FileManager::loadConfig(CONFIG_FILE);
     std::string cityName = config.count("city_name") ? config["city_name"] : "NeoVerse City";
-    std::cout << "Loaded configuration for: " << cityName << "\n\n";
+    cout << "Loaded configuration for: " << cityName << "\n\n";
 
     EngineerManager engineerMgr;
     engineerMgr.loadFromFile(ENGINEERS_FILE);
     if (engineerMgr.getAll().empty()) seedDefaultEngineers(engineerMgr);
 
-    std::cout << "\n--- AI Engineer Login ---\n";
+    cout << "\n--- AI Engineer Login ---\n";
     Engineer* current = login(engineerMgr);
     if (!current) {
-        std::cout << "\nToo many failed attempts. Access denied. Shutting down.\n";
+        cout << "\nToo many failed attempts. Access denied. Shutting down.\n";
         return 1;
     }
 
@@ -182,62 +184,62 @@ int main() {
 
         switch (choice) {
             case 1:
-                std::cout << "\n--- CITY COMPONENT STATUS ---\n";
-                for (auto* c : components) std::cout << "  " << c->getStatus() << "\n";
+                cout << "\n--- CITY COMPONENT STATUS ---\n";
+                for (auto* c : components) cout << "  " << c->getStatus() << "\n";
                 break;
             case 2: {
                 std::string type = readLine("Reading type (Energy/Traffic/Population/Weather): ");
                 double value = readDouble("Value: ");
                 cityData.addSensorReading(type, value);
-                std::cout << "Sensor reading recorded.\n";
+                cout << "Sensor reading recorded.\n";
                 break;
             }
             case 3: {
                 int id = readInt("Reading ID to remove: ");
-                std::cout << (cityData.removeSensorReadingById(id) ? "Removed.\n" : "Not found.\n");
+                cout << (cityData.removeSensorReadingById(id) ? "Removed.\n" : "Not found.\n");
                 break;
             }
             case 4:
-                std::cout << "\n--- SENSOR READINGS ---\n";
+                cout << "\n--- SENSOR READINGS ---\n";
                 cityData.displaySensorReadings();
                 break;
             case 5: {
                 std::string msg = readLine("Log message: ");
                 cityData.addLogEntry(msg);
-                std::cout << "Log entry added.\n";
+                cout << "Log entry added.\n";
                 break;
             }
             case 6:
-                std::cout << "\n--- CITY LOGS ---\n";
+                cout << "\n--- CITY LOGS ---\n";
                 cityData.displayLogs();
                 break;
             case 7: {
-                std::cout << "1) Traffic Accident  2) Power Failure  3) Network Overload  4) Weather Alert\n";
+                cout << "1) Traffic Accident  2) Power Failure  3) Network Overload  4) Weather Alert\n";
                 int t = readInt("Event type: ");
                 std::string desc = readLine("Description: ");
                 int sev = readInt("Severity (1-5): ");
                 eventMgr.raiseEvent(intToEventType(t), desc, sev);
-                std::cout << "Event queued (" << eventMgr.pendingEvents() << " pending).\n";
+                cout << "Event queued (" << eventMgr.pendingEvents() << " pending).\n";
                 break;
             }
             case 8:
                 if (!eventMgr.processNextEvent(components))
-                    std::cout << "No pending events.\n";
+                    cout << "No pending events.\n";
                 break;
             case 9: {
-                std::cout << "1) Traffic Accident  2) Power Failure  3) Network Overload  4) Weather Alert\n";
+                cout << "1) Traffic Accident  2) Power Failure  3) Network Overload  4) Weather Alert\n";
                 int t = readInt("Emergency type: ");
                 std::string desc = readLine("Description: ");
                 int sev = readInt("Severity (1-5): ");
                 int pri = readInt("Priority (1-10): ");
                 eventMgr.raiseEmergency(intToEventType(t), desc, sev, pri);
-                std::cout << "Emergency pushed onto override stack ("
-                          << eventMgr.pendingEmergencies() << " pending).\n";
+                cout << "Emergency pushed onto override stack ("
+                     << eventMgr.pendingEmergencies() << " pending).\n";
                 break;
             }
             case 10:
                 if (!eventMgr.resolveEmergency(components))
-                    std::cout << "No pending emergencies.\n";
+                    cout << "No pending emergencies.\n";
                 break;
             case 11:
                 ReportGenerator::printEventReport(eventMgr.getProcessedEvents());
@@ -253,17 +255,17 @@ int main() {
                 running = false;
                 break;
             default:
-                std::cout << "Unknown option, please choose 1-14.\n";
+                cout << "Unknown option, please choose 1-14.\n";
         }
     }
 
-    std::cout << "\nSaving system state...\n";
+    cout << "\nSaving system state...\n";
     engineerMgr.saveToFile(ENGINEERS_FILE);
     cityData.saveSensorReadings(SENSORS_FILE);
     cityData.saveLogs(LOGS_FILE);
     eventMgr.saveProcessed(EVENTS_FILE);
 
     for (auto* c : components) delete c; // destructors run here - cleanup demo
-    std::cout << "Goodbye, " << current->getUsername() << ". NeoVerse City Engine shut down safely.\n";
+    cout << "Goodbye, " << current->getUsername() << ". NeoVerse City Engine shut down safely.\n";
     return 0;
 }

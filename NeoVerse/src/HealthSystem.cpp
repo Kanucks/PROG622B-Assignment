@@ -1,6 +1,8 @@
 #include "HealthSystem.h"
 #include <iostream>
 
+using namespace std;
+
 HealthSystem::HealthSystem(int id, const std::string& n, int startCount)
     : CityComponent(id, n), hospitalCnt(startCount) {}
 
@@ -15,10 +17,10 @@ int HealthSystem::getHospitalCnt() const { return hospitalCnt; }
 void HealthSystem::processEvent(const Event& e) {
     if (e.getType() == EventType::WeatherAlert) {
         hospitalCnt += e.getSeverity();
-        std::cout << "  -> HealthSystem: placing " << e.getSeverity()
-                  << " additional hospital(s) on standby (total " << hospitalCnt << ")\n";
+        cout << "  -> HealthSystem: placing " << e.getSeverity()
+             << " additional hospital(s) on standby (total " << hospitalCnt << ")\n";
     } else {
-        std::cout << "  -> HealthSystem: no direct action required for this event\n";
+        cout << "  -> HealthSystem: no direct action required for this event\n";
     }
 }
 

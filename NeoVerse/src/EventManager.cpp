@@ -3,6 +3,8 @@
 #include <fstream>
 #include <iostream>
 
+using namespace std;
+
 namespace {
     // Fixed dispatch order agreed with main.cpp when the components vector
     // is built: 0 = Power, 1 = Transport, 2 = Health, 3 = Security.
@@ -35,7 +37,7 @@ bool EventManager::processNextEvent(std::vector<CityComponent*>& components) {
     // they arrived (FIFO), matching the brief's requirement.
     Event e = eventQueue.front();
     eventQueue.pop();
-    std::cout << e.toString() << "\n";
+    cout << e.toString() << "\n";
 
     CityComponent* target = routeComponent(e.getType(), components);
     if (target) target->processEvent(e); // virtual dispatch -> correct override runs
@@ -51,7 +53,7 @@ bool EventManager::resolveEmergency(std::vector<CityComponent*>& components) {
     // critical failure should pre-empt an older one still waiting.
     EmergencyEvent e = emergencyStack.top();
     emergencyStack.pop();
-    std::cout << e.toString() << "\n";
+    cout << e.toString() << "\n";
 
     CityComponent* target = routeComponent(e.getType(), components);
     if (target) target->processEvent(e);
