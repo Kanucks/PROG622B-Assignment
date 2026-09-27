@@ -81,7 +81,7 @@ void seedDefaultEngineers(EngineerManager& mgr) {
     mgr.addEngineer(Engineer("ENG002", "jsmith",  "pass123",  "Medium"));
     mgr.addEngineer(Engineer("ENG003", "tnandi",  "city2035", "Low"));
     mgr.saveToFile(ENGINEERS_FILE);
-    std::cout << "[Setup] No engineers.dat found - seeded 3 default accounts and saved them.\n";
+    cout << "[Setup] No engineers.dat found - seeded 3 default accounts and saved them.\n";
 }
 
 Engineer* login(EngineerManager& mgr) {
@@ -90,17 +90,17 @@ Engineer* login(EngineerManager& mgr) {
         std::string pass  = readLine("Password: ");
         Engineer* e = mgr.loginLinear(uname, pass);
         if (e) {
-            std::cout << "\nAccess granted. Welcome, " << e->getUsername()
-                      << " (" << e->getClearanceLevel() << " clearance).\n";
+            cout << "\nAccess granted. Welcome, " << e->getUsername()
+                 << " (" << e->getClearanceLevel() << " clearance).\n";
             return e;
         }
-        std::cout << "Invalid credentials. Attempt " << attempt << "/3.\n";
+        cout << "Invalid credentials. Attempt " << attempt << "/3.\n";
     }
     return nullptr;
 }
 
 void compareSearchAlgorithms(EngineerManager& mgr) {
-    if (mgr.getAll().empty()) { std::cout << "No engineers loaded.\n"; return; }
+    if (mgr.getAll().empty()) { cout << "No engineers loaded.\n"; return; }
     std::string target = mgr.getAll().back().getUsername();
 
     auto t1 = std::chrono::high_resolution_clock::now();
