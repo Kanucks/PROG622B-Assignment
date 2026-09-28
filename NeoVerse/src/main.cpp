@@ -112,31 +112,31 @@ void compareSearchAlgorithms(EngineerManager& mgr) {
     auto linearNs = std::chrono::duration_cast<std::chrono::nanoseconds>(t2 - t1).count();
     auto binaryNs = std::chrono::duration_cast<std::chrono::nanoseconds>(t3 - t2).count();
 
-    std::cout << "\n=== LOGIN SEARCH COMPARISON (n = " << mgr.getAll().size() << " engineers) ===\n";
-    std::cout << "Linear search (std::find_if):  O(n)      -> " << linearNs << " ns\n";
-    std::cout << "Binary search (sorted vector): O(log n)  -> " << binaryNs << " ns\n";
-    std::cout << "With only a handful of engineers the difference is negligible, but\n"
-                 "binary search scales far better as the workforce grows - the cost is\n"
-                 "that the vector must be kept sorted by username.\n";
+    cout << "\n=== LOGIN SEARCH COMPARISON (n = " << mgr.getAll().size() << " engineers) ===\n";
+    cout << "Linear search (std::find_if):  O(n)      -> " << linearNs << " ns\n";
+    cout << "Binary search (sorted vector): O(log n)  -> " << binaryNs << " ns\n";
+    cout << "With only a handful of engineers the difference is negligible, but\n"
+            "binary search scales far better as the workforce grows - the cost is\n"
+            "that the vector must be kept sorted by username.\n";
 }
 
 void printMenu() {
-    std::cout << "\n========== NEOVERSE CITY CONTROL ==========\n"
-                 " 1. View city component status\n"
-                 " 2. Add sensor reading\n"
-                 " 3. Remove sensor reading by ID\n"
-                 " 4. Display all sensor readings\n"
-                 " 5. Add city log entry\n"
-                 " 6. Display city logs\n"
-                 " 7. Raise a new city event (enqueue)\n"
-                 " 8. Process next event (FIFO)\n"
-                 " 9. Raise an emergency override\n"
-                 "10. Resolve next emergency (LIFO)\n"
-                 "11. View reports & analytics\n"
-                 "12. Export event history to CSV\n"
-                 "13. Compare login search algorithms (Big-O demo)\n"
-                 "14. Save & Exit\n"
-                 "=============================================\n";
+    cout << "\n========== NEOVERSE CITY CONTROL =========="
+            " 1. View city component status\n"
+            " 2. Add sensor reading\n"
+            " 3. Remove sensor reading by ID\n"
+            " 4. Display all sensor readings\n"
+            " 5. Add city log entry\n"
+            " 6. Display city logs\n"
+            " 7. Raise a new city event (enqueue)\n"
+            " 8. Process next event (FIFO)\n"
+            " 9. Raise an emergency override\n"
+            "10. Resolve next emergency (LIFO)\n"
+            "11. View reports & analytics\n"
+            "12. Export event history to CSV\n"
+            "13. Compare login search algorithms (Big-O demo)\n"
+            "14. Save & Exit\n"
+            "=============================================\n";
 }
 
 } // namespace
