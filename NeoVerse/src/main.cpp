@@ -21,49 +21,49 @@ using namespace std;
 
 namespace {
 
-const std::string ENGINEERS_FILE  = "data/engineers.dat";
-const std::string SENSORS_FILE    = "data/sensors.dat";
-const std::string LOGS_FILE       = "data/city_logs.dat";
-const std::string EVENTS_FILE     = "data/events.dat";
-const std::string CONFIG_FILE     = "data/config.txt";
-const std::string EXPORT_CSV_FILE = "data/events_export.csv";
+const string ENGINEERS_FILE  = "data/engineers.dat";
+const string SENSORS_FILE    = "data/sensors.dat";
+const string LOGS_FILE       = "data/city_logs.dat";
+const string EVENTS_FILE     = "data/events.dat";
+const string CONFIG_FILE     = "data/config.txt";
+const string EXPORT_CSV_FILE = "data/events_export.csv";
 
 // Note: after a successful cin >> extraction, the trailing '\n' left in
 // the buffer is consumed immediately (not by the next readLine call) so
 // that a readInt()/readDouble() followed by a readLine() never causes the
 // following getline() to read an empty line.
-int readInt(const std::string& prompt) {
+int readInt(const string& prompt) {
     int value;
     while (true) {
         cout << prompt;
         if (cin >> value) {
-            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             return value;
         }
         cout << "Please enter a valid whole number.\n";
         cin.clear();
-        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
 }
 
-double readDouble(const std::string& prompt) {
+double readDouble(const string& prompt) {
     double value;
     while (true) {
         cout << prompt;
         if (cin >> value) {
-            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             return value;
         }
         cout << "Please enter a valid number.\n";
         cin.clear();
-        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
 }
 
-std::string readLine(const std::string& prompt) {
+string readLine(const string& prompt) {
     cout << prompt;
-    std::string line;
-    std::getline(cin, line);
+    string line;
+    getline(cin, line);
     return line;
 }
 
@@ -86,8 +86,8 @@ void seedDefaultEngineers(EngineerManager& mgr) {
 
 Engineer* login(EngineerManager& mgr) {
     for (int attempt = 1; attempt <= 3; ++attempt) {
-        std::string uname = readLine("Username: ");
-        std::string pass  = readLine("Password: ");
+        string uname = readLine("Username: ");
+        string pass  = readLine("Password: ");
         Engineer* e = mgr.loginLinear(uname, pass);
         if (e) {
             cout << "\nAccess granted. Welcome, " << e->getUsername()
@@ -101,7 +101,7 @@ Engineer* login(EngineerManager& mgr) {
 
 void compareSearchAlgorithms(EngineerManager& mgr) {
     if (mgr.getAll().empty()) { cout << "No engineers loaded.\n"; return; }
-    std::string target = mgr.getAll().back().getUsername();
+    string target = mgr.getAll().back().getUsername();
 
     auto t1 = std::chrono::high_resolution_clock::now();
     mgr.loginLinear(target, "___wrong___");
@@ -147,7 +147,7 @@ int main() {
             "======================================================\n\n";
 
     auto config = FileManager::loadConfig(CONFIG_FILE);
-    std::string cityName = config.count("city_name") ? config["city_name"] : "NeoVerse City";
+    string cityName = config.count("city_name") ? config["city_name"] : "NeoVerse City";
     cout << "Loaded configuration for: " << cityName << "\n\n";
 
     EngineerManager engineerMgr;
@@ -163,7 +163,7 @@ int main() {
 
     // Fixed order relied on by EventManager's routing table:
     // 0 = Power, 1 = Transport, 2 = Health, 3 = Security.
-    std::vector<CityComponent*> components;
+    vector<CityComponent*> components;
     components.push_back(new PowerSystem(1, "Power Grid"));
     components.push_back(new TransportSystem(2, "Transport Network"));
     components.push_back(new HealthSystem(3, "Health Network"));
@@ -188,7 +188,7 @@ int main() {
                 for (auto* c : components) cout << "  " << c->getStatus() << "\n";
                 break;
             case 2: {
-                std::string type = readLine("Reading type (Energy/Traffic/Population/Weather): ");
+                string type = readLine("Reading type (Energy/Traffic/Population/Weather): ");
                 double value = readDouble("Value: ");
                 cityData.addSensorReading(type, value);
                 cout << "Sensor reading recorded.\n";
@@ -216,7 +216,7 @@ int main() {
             case 7: {
                 cout << "1) Traffic Accident  2) Power Failure  3) Network Overload  4) Weather Alert\n";
                 int t = readInt("Event type: ");
-                std::string desc = readLine("Description: ");
+                string desc = readLine("Description: ");
                 int sev = readInt("Severity (1-5): ");
                 eventMgr.raiseEvent(intToEventType(t), desc, sev);
                 cout << "Event queued (" << eventMgr.pendingEvents() << " pending).\n";
@@ -229,7 +229,7 @@ int main() {
             case 9: {
                 cout << "1) Traffic Accident  2) Power Failure  3) Network Overload  4) Weather Alert\n";
                 int t = readInt("Emergency type: ");
-                std::string desc = readLine("Description: ");
+                string desc = readLine("Description: ");
                 int sev = readInt("Severity (1-5): ");
                 int pri = readInt("Priority (1-10): ");
                 eventMgr.raiseEmergency(intToEventType(t), desc, sev, pri);
