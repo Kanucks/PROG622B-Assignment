@@ -2,9 +2,11 @@
 #include <functional>
 #include <cstddef>
 
+using namespace std;
+
 // A minimal hand-rolled singly linked list with a tail pointer.
 // Used for the historical city log, which the brief says must support
-// "unlimited growth". Written by hand (rather than using std::list)
+// "unlimited growth". Written by hand rather than using a library list
 // to show the underlying node/pointer mechanics explicitly.
 template <typename T>
 class LinkedList {
@@ -17,7 +19,7 @@ private:
 
     Node* head;
     Node* tail;
-    std::size_t count;
+    size_t count;
 
 public:
     LinkedList() : head(nullptr), tail(nullptr), count(0) {}
@@ -49,7 +51,7 @@ public:
 
     // O(n) removal by predicate - the list has no random access, so we
     // must walk node by node until we find a match.
-    bool removeIf(const std::function<bool(const T&)>& pred) {
+    bool removeIf(const function<bool(const T&)>& pred) {
         Node* prev = nullptr;
         Node* cur = head;
         while (cur) {
@@ -67,7 +69,7 @@ public:
     }
 
     // O(n) traversal, visiting every node via its `next` pointer.
-    void forEach(const std::function<void(const T&)>& fn) const {
+    void forEach(const function<void(const T&)>& fn) const {
         Node* cur = head;
         while (cur) {
             fn(cur->data);
@@ -75,6 +77,6 @@ public:
         }
     }
 
-    std::size_t size() const { return count; }
+    size_t size() const { return count; }
     bool empty() const { return count == 0; }
 };

@@ -4,8 +4,10 @@
 #include <vector>
 #include "Event.h"
 
+using namespace std;
+
 // Small standalone helpers for config.txt and CSV export (section 7).
 namespace FileManager {
-    std::map<std::string, std::string> loadConfig(const std::string& path);
-    void exportEventsToCSV(const std::vector<Event>& events, const std::string& path);
+    map<string, string> loadConfig(const string& path);
+    void exportEventsToCSV(const vector<Event>& events, const string& path);
 }

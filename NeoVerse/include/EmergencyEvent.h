@@ -1,6 +1,8 @@
 #pragma once
 #include "Event.h"
 
+using namespace std;
+
 // An Event that additionally carries a priority, used on the LIFO
 // emergency-override stack. Demonstrates inheritance (extends Event).
 class EmergencyEvent : public Event {
@@ -9,11 +11,11 @@ private:
 
 public:
     EmergencyEvent();
-    EmergencyEvent(int id, EventType t, const std::string& desc, int sev, int priority);
+    EmergencyEvent(int id, EventType t, const string& desc, int sev, int priority);
 
     int getPriorityLevel() const;
 
-    std::string toString() const override;
-    std::string serialize() const override;
-    static EmergencyEvent deserialize(const std::string& line);
+    string toString() const override;
+    string serialize() const override;
+    static EmergencyEvent deserialize(const string& line);
 };
