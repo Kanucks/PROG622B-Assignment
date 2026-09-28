@@ -1,5 +1,8 @@
 NeoVerse - Visual Studio 2022 Setup Guide
-This project is a Windows console application built in C++17. It is designed to run in a normal terminal window and can be launched either from Visual Studio 2022 or by double-clicking the generated executable.
+
+This project is a Windows console application built in C++17. 
+
+It is designed to run in a normal terminal window and can be launched either from Visual Studio 2022 or by double-clicking the generated executable.
 
 1. Project folder
 Open this folder in Windows Explorer or in Visual Studio:
@@ -9,44 +12,77 @@ C:\Users\trist\Downloads\Prog622B Assignment\PROG622B-Assignment\NeoVerse
 The project contains:
 
 src/
+
 include/
+
 data/
+
 README.md
+
 NeoVerse.exe
+
+
 2. Requirements
+   
 Install the following on your Windows PC:
 
 Visual Studio 2022
 Desktop development with C++ workload
 Windows 10 or Windows 11
+
 No extra external libraries are required for this project.
 
 3. Run the project in Visual Studio 2022
+   
 Method A: Open the folder directly
 Open Visual Studio 2022.
+
 Click File > Open > Folder.
+
 Select the project folder: C:\Users\trist\Downloads\Prog622B Assignment\PROG622B-Assignment\NeoVerse
+
 Visual Studio will load the folder structure.
+
 Open src/main.cpp.
+
 Press Ctrl + F5 to run the application without debugging.
+
 A console window will open and the program will start.
+
+
 Method B: Create a new C++ project manually
+
 Open Visual Studio 2022.
+
 Click Create a new project.
+
 Select Empty Project.
+
 Name it NeoVerse.
+
 Choose a location such as: C:\Users\trist\Downloads\Prog622B Assignment\PROG622B-Assignment\NeoVerse
+
 Click Create.
+
 Right-click Source Files > Add > Existing Item.
+
 Add all .cpp files from src/.
+
 Right-click Header Files > Add > Existing Item.
+
 Add all .h files from include/.
+
 Right-click the project in Solution Explorer > Properties.
+
 Go to C/C++ > Language.
+
 Set C++ Language Standard to C++17.
+
 Build > Build Solution.
+
 Press Ctrl + F5 to run it.
-4. Run the standalone .exe file
+
+5. Run the standalone .exe file
 A standalone Windows executable is already generated in the project folder:
 
 NeoVerse.exe
